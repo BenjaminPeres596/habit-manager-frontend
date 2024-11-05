@@ -19,7 +19,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.laloy.habitmanagerfrontend"
     },
     "web": {
       "bundler": "metro",
@@ -27,6 +28,12 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "react-native-auth0",
+        {
+          "domain": "dev-fvp00ztww2h1bogg.us.auth0.com"
+        }
+      ],
       "expo-router"
     ],
     "experiments": {
