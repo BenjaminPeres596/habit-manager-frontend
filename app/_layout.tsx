@@ -33,6 +33,9 @@ export default function RootLayout() {
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
         <Stack>
           <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="home" options={{ headerShown: false }} />
+          <Stack.Screen name="addTask"/>
+          <Stack.Screen name="taskDetails"/>
         </Stack>
       </ThemeProvider>
     </Auth0Provider>

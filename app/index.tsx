@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Image, StyleSheet, Platform, Button } from 'react-native';
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
@@ -6,8 +6,13 @@ import { ThemedView } from '@/components/ThemedView';
 import LoginButton from '@/components/LoginButton';
 import LogoutButton from '@/components/LogoutButton';
 import Profile from '@/components/Profile'; // Asegúrate de que la ruta sea correcta
+import { Link } from 'expo-router';
+import { useRouter } from 'expo-router';
 
-export default function HomeScreen() {
+export default function LoginScreen() {
+
+  const navigation = useRouter();
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -35,6 +40,9 @@ export default function HomeScreen() {
       <ThemedView style={styles.stepContainer}>
         <LogoutButton />
       </ThemedView>
+
+      <Button title="skip login" onPress={()=>navigation.navigate("/home")}></Button>
+
     </ParallaxScrollView>
   );
 }
