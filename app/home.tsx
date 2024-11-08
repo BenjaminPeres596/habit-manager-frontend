@@ -9,23 +9,28 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>home screen</Text>
+      <Text style={styles.title}>TP3 Móviles Gupo XX</Text>
 
-      <ActivityPill
-        label="Important Task"
-        priority="high" // Puedes cambiar esto a 'medium' o 'low'
-        onPress={() => navigation.navigate("/taskDetails")}
-      /><ActivityPill
-        label="Important Task"
-        priority="medium" // Puedes cambiar esto a 'medium' o 'low'
-        onPress={() => navigation.navigate("/taskDetails")}
-      /><ActivityPill
-        label="Important Task"
-        priority="low" // Puedes cambiar esto a 'medium' o 'low'
-        onPress={() => navigation.navigate("/taskDetails")}
-      />
+      <View style={styles.mainContainer}>
 
-      <AddActivityPill />
+        <Text style={styles.text}>Aca iría el filtro</Text>
+
+        <ActivityPill
+          label="Important Task"
+          priority="high" // Puedes cambiar esto a 'medium' o 'low'
+          onPress={() => navigation.navigate("/taskDetails")}
+        /><ActivityPill
+          label="Important Task"
+          priority="medium" // Puedes cambiar esto a 'medium' o 'low'
+          onPress={() => navigation.navigate("/taskDetails")}
+        /><ActivityPill
+          label="Important Task"
+          priority="low" // Puedes cambiar esto a 'medium' o 'low'
+          onPress={() => navigation.navigate("/taskDetails")}
+        />
+        <AddActivityPill />
+
+      </View>
 
     </View>
   );
@@ -39,6 +44,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   text: {
-    color: '#fff',
+    color: 'white',
+    fontSize: 24,
+    marginBottom: 16,
+  },
+  title: {
+    color: 'white',
+    fontSize: 24,
+    position: 'absolute',
+    top: 80,
+  },
+  mainContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    width: '100%',
+    padding: 16,
+    marginTop: 16,
   },
 });
