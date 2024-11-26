@@ -1,5 +1,6 @@
 import ActivityPill from '@/components/ActivityPill';
 import AddActivityPill from '@/components/AddActivityPill';
+import LogoutButton from '@/components/LogoutButton';
 import { useRouter } from 'expo-router';
 import { Text, View, StyleSheet, Button } from 'react-native';
 
@@ -9,6 +10,8 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
+      <LogoutButton />
+
       <Text style={styles.title}>TP3 Móviles Gupo XX</Text>
 
       <View style={styles.mainContainer}>

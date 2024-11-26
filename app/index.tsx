@@ -6,12 +6,17 @@ import { ThemedView } from '@/components/ThemedView';
 import LoginButton from '@/components/LoginButton';
 import LogoutButton from '@/components/LogoutButton';
 import Profile from '@/components/Profile'; // Asegúrate de que la ruta sea correcta
-import { Link } from 'expo-router';
 import { useRouter } from 'expo-router';
+import { useAuth0 } from 'react-native-auth0';
 
 export default function LoginScreen() {
 
   const navigation = useRouter();
+
+  const auth0 = useAuth0();
+  if (auth0.user) {
+    navigation.replace("/home");
+  }
 
   return (
     <ParallaxScrollView
@@ -41,7 +46,7 @@ export default function LoginScreen() {
         <LogoutButton />
       </ThemedView>
 
-      <Button title="skip login" onPress={()=>navigation.navigate("/home")}></Button>
+      <Button title="skip login" onPress={() => navigation.navigate("/home")}></Button>
 
     </ParallaxScrollView>
   );
