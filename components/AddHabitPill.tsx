@@ -2,7 +2,7 @@ import React from 'react';
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native';
 import { useRouter } from 'expo-router'; // Para la navegación en Expo
 
-const AddActivityPill: React.FC = () => {
+const AddHabitPill: React.FC = () => {
     const router = useRouter(); // Usamos useRouter para redirigir a la pantalla AddTask
 
     // Función onPress predefinida para redirigir
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default AddActivityPill;
+export default AddHabitPill;

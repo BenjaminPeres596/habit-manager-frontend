@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button } from 'react-native';
 import { useAuth0 } from 'react-native-auth0';
-import { useAuth } from '@/hooks/authContext';
+import { useAuth } from '@/context/authContext';
 import { useRouter } from 'expo-router';
 
 const LoginButton = () => {

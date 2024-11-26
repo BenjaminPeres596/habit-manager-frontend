@@ -1,12 +1,15 @@
-import ActivityPill from '@/components/ActivityPill';
-import AddActivityPill from '@/components/AddActivityPill';
+import HabitPill from '@/components/HabitPill';
+import AddHabitPill from '@/components/AddHabitPill';
 import LogoutButton from '@/components/LogoutButton';
 import { useRouter } from 'expo-router';
+import { useContext, useState } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
+import { habitListContext } from '../context/habitContext'; // Adjust the import path as needed
 
 export default function HomeScreen() {
-
   const navigation = useRouter();
+
+  const habits = useContext(habitListContext);
 
   return (
     <View style={styles.container}>
@@ -17,21 +20,15 @@ export default function HomeScreen() {
       <View style={styles.mainContainer}>
 
         <Text style={styles.text}>Aca iría el filtro</Text>
-
-        <ActivityPill
-          label="Important Task"
-          priority="high" // Puedes cambiar esto a 'medium' o 'low'
-          onPress={() => navigation.navigate("/taskDetails")}
-        /><ActivityPill
-          label="Important Task"
-          priority="medium" // Puedes cambiar esto a 'medium' o 'low'
-          onPress={() => navigation.navigate("/taskDetails")}
-        /><ActivityPill
-          label="Important Task"
-          priority="low" // Puedes cambiar esto a 'medium' o 'low'
-          onPress={() => navigation.navigate("/taskDetails")}
-        />
-        <AddActivityPill />
+        {habits.map((habit) => (
+          <HabitPill
+            key={habit.id}
+            label={habit.name}
+            priority={habit.priority} // Assuming Habit has a priority field
+            onPress={() => navigation.navigate("/taskDetails")}
+          />
+        ))}
+        <AddHabitPill />
 
       </View>
 
