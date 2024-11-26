@@ -25,7 +25,7 @@ export default function HomeScreen() {
             key={habit.id}
             label={habit.name}
             priority={habit.priority} // Assuming Habit has a priority field
-            onPress={() => navigation.navigate("/taskDetails")}
+            onPress={() => navigation.navigate({ pathname: '/taskDetails', params: { id: habit.id } })}
           />
         ))}
         <AddHabitPill />
