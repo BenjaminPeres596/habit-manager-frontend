@@ -4,18 +4,19 @@ import { Checkbox } from 'react-native-paper';
 
 interface HabitPillProps {
     label: string;
-    priority: 'High' | 'Medium' | 'Low';  // Propiedad de prioridad
-    onPress: () => void;  // Función para manejar el evento de clic
+    priority: 'High' | 'Medium' | 'Low';
+    completed: boolean;
+    onPress: () => void;
 }
 
-const HabitPill: React.FC<HabitPillProps> = ({ label, priority, onPress }) => {
-    const [checked, setChecked] = useState(false);
+const HabitPill: React.FC<HabitPillProps> = ({ label, priority, completed, onPress }) => {
+    const [checked, setChecked] = useState(completed);
 
     // Mapa de colores basado en la prioridad
     const priorityColors: { [key in 'High' | 'Medium' | 'Low']: string } = {
-        High: '#F46B6B',    // Rojo para alta prioridad
-        Medium: '#FFBC37',  // Amarillo para media prioridad
-        Low: '#84F46B',     // Verde para baja prioridad
+        High: '#F46B6B',
+        Medium: '#FFBC37',
+        Low: '#84F46B',
     };
 
     return (

@@ -3,7 +3,7 @@ import { createContext } from 'react';
 
 const initialHabitList: Habit[] = [
     { id: 1, name: 'Ejercicio', priority: 'High', completed: false },
-    { id: 2, name: 'Tarea', priority: 'Medium', completed: false },
+    { id: 2, name: 'Tarea', priority: 'Medium', completed: true },
     { id: 3, name: 'Estudiar', priority: 'Low', completed: false },
 ];
 
