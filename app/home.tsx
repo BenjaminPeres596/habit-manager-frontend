@@ -23,9 +23,7 @@ export default function HomeScreen() {
         {habits.map((habit) => (
           <HabitPill
             key={habit.id}
-            label={habit.name}
-            priority={habit.priority}
-            completed={habit.completed}
+            habit={habit}
             onPress={() => navigation.navigate({ pathname: '/taskDetails', params: { id: habit.id } })}
           />
         ))}

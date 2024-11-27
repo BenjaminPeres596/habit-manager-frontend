@@ -22,7 +22,7 @@ export default function TaskDetailsScreen() {
       <Text style={styles.text}>Habit ID: {habit.id}</Text>
       <Text style={styles.text}>Name: {habit.name}</Text>
       <Text style={styles.text}>Priority: {habit.priority}</Text>
-      {/* Add more details as needed */}
+      <Text style={styles.text}>Completed: {habit.completed ? 'Yes' : 'No'}</Text>
     </View>
   );
 }

@@ -1,16 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Checkbox } from 'react-native-paper';
+import { Habit } from '@/types/types';
+import { habitListContext } from '@/context/habitContext';
 
 interface HabitPillProps {
-    label: string;
-    priority: 'High' | 'Medium' | 'Low';
-    completed: boolean;
+    habit: Habit;
     onPress: () => void;
 }
 
-const HabitPill: React.FC<HabitPillProps> = ({ label, priority, completed, onPress }) => {
+const HabitPill: React.FC<HabitPillProps> = ({ habit, onPress }) => {
+
+    const habits = useContext(habitListContext);
+
+    const { id, name, priority, completed } = habit;
+
     const [checked, setChecked] = useState(completed);
+
+    useEffect(() => {
+        const index = habits.findIndex((h) => h.id === habit.id);
+        if (index !== -1) {
+            habits[index].completed = checked;
+        }
+    }, [checked]);
 
     // Mapa de colores basado en la prioridad
     const priorityColors: { [key in 'High' | 'Medium' | 'Low']: string } = {
@@ -24,7 +36,8 @@ const HabitPill: React.FC<HabitPillProps> = ({ label, priority, completed, onPre
             style={[styles.buttonContainer, { backgroundColor: priorityColors[priority] }]} // Establecer el color de fondo según la prioridad
             onPress={onPress}
         >
-            <Text style={styles.buttonText}>{label}</Text>
+            <Text style={styles.buttonText}>{name}</Text>
+            
             <Checkbox
                 color='black'
                 uncheckedColor='black'
