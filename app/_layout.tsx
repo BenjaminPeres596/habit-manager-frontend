@@ -9,6 +9,7 @@ import { useColorScheme } from '@/hooks/useColorScheme';
 
 import { useAuth0, Auth0Provider } from 'react-native-auth0';
 import { AuthProvider } from '@/context/authContext';
+import { HabitProvider } from '@/context/habitContext';
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -33,12 +34,15 @@ export default function RootLayout() {
     <Auth0Provider domain="dev-fvp00ztww2h1bogg.us.auth0.com" clientId="gCPmmvZb7eB87YTcbQomLBwHpaVPq869">
       <AuthProvider>
         <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-          <Stack>
-            <Stack.Screen name="index" options={{ headerShown: false }} />
-            <Stack.Screen name="home" options={{ headerShown: false }} />
-            <Stack.Screen name="addTask"/>
-            <Stack.Screen name="taskDetails"/>
-          </Stack>
+          <HabitProvider>
+            <Stack>
+              <Stack.Screen name="index" options={{ headerShown: false }} />
+              <Stack.Screen name="home" options={{ headerShown: false }} />
+              <Stack.Screen name="addTask" />
+              <Stack.Screen name="taskDetails" />
+            </Stack>
+          </HabitProvider>
+
         </ThemeProvider>
       </AuthProvider>
     </Auth0Provider>

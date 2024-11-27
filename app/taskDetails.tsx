@@ -5,7 +5,15 @@ import { habitListContext } from '../context/habitContext'; // Adjust the import
 
 export default function TaskDetailsScreen() {
   const { id } = useLocalSearchParams(); // Access the habit ID from the query parameters
-  const habits = useContext(habitListContext); // Get the habits from the context
+
+  const context = useContext(habitListContext);
+
+  if (!context) {
+    throw new Error('useHabitList must be used within a HabitProvider');
+  }
+
+  const { habits, setHabits } = context;
+
   const habit = habits.find(h => h.id === Number(id)); // Find the habit with the matching ID
 
   if (!habit) {

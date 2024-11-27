@@ -11,7 +11,13 @@ interface HabitPillProps {
 
 const HabitPill: React.FC<HabitPillProps> = ({ habit, onPress }) => {
 
-    const habits = useContext(habitListContext);
+    const context = useContext(habitListContext);
+
+    if (!context) {
+        throw new Error('useHabitList must be used within a HabitProvider');
+    }
+
+    const { habits, setHabits } = context;
 
     const { id, name, priority, completed } = habit;
 

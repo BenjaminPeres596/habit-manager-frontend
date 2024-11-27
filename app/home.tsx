@@ -9,7 +9,13 @@ import { habitListContext } from '../context/habitContext'; // Adjust the import
 export default function HomeScreen() {
   const navigation = useRouter();
 
-  const habits = useContext(habitListContext);
+  const context = useContext(habitListContext);
+
+  if (!context) {
+    throw new Error('useHabitList must be used within a HabitProvider');
+  }
+
+  const { habits, setHabits } = context;
 
   return (
     <View style={styles.container}>
