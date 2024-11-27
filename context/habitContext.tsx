@@ -1,11 +1,6 @@
 import { Habit } from '@/types/types';
-import { createContext, useState, ReactNode } from 'react';
-
-const initialHabitList: Habit[] = [
-    { id: 1, name: 'Ejercicio', priority: 'High', completed: false },
-    { id: 2, name: 'Tarea', priority: 'Medium', completed: true },
-    { id: 3, name: 'Estudiar', priority: 'Low', completed: false },
-];
+import { createContext, useState, ReactNode, useEffect } from 'react';
+import { getHabits } from '@/services/habit';
 
 interface HabitContextType {
     habits: Habit[];
@@ -15,7 +10,27 @@ interface HabitContextType {
 export const habitListContext = createContext<HabitContextType | undefined>(undefined);
 
 export const HabitProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-    const [habits, setHabits] = useState(initialHabitList);
+    const [habits, setHabits] = useState<Habit[]>([]);
+
+    useEffect(() => {
+        async function fetchHabits() {
+            try {
+                const response = await getHabits();
+                const formattedHabits = response.map((habit: any) => ({
+                    id: habit.id,
+                    name: habit.name,
+                    priority: habit.priority === 0 ? 'High' : habit.priority === 1 ? 'Medium' : 'Low',
+                    completed: false, // Assuming the completed status is not provided in the response
+                    description: habit.description,
+                }));
+                setHabits(formattedHabits);
+            } catch (error) {
+                console.error('Failed to fetch habits:', error);
+            }
+        }
+
+        fetchHabits();
+    }, []);
 
     return (
         <habitListContext.Provider value={{ habits, setHabits }}>

@@ -20,6 +20,7 @@ const LoginButton = () => {
 
         if (credentials) {
           console.log("Logged in successfully");
+          console.log("Token:", credentials.accessToken);
           navigation.replace("/home");  // Add this to navigate to the home screen
         }
 
