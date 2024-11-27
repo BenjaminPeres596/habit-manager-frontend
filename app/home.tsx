@@ -30,7 +30,7 @@ export default function HomeScreen() {
           <HabitPill
             key={habit.id}
             habit={habit}
-            onPress={() => navigation.navigate({ pathname: '/taskDetails', params: { id: habit.id } })}
+            onPress={() => navigation.navigate({ pathname: '/habitDetails', params: { id: habit.id } })}
           />
         ))}
         <AddHabitPill />

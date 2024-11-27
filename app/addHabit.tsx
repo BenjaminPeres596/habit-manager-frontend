@@ -1,9 +1,14 @@
-import { Text, View, StyleSheet } from 'react-native';
+import { Text, View, StyleSheet, Button } from 'react-native';
+
+function handleNewHabit() {
+  console.log('Add habit button pressed');
+}
 
 export default function addTaskScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>add task screen</Text>
+      <Button title="agregar hábito" onPress={handleNewHabit}></Button>
     </View>
   );
 }

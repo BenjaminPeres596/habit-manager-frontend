@@ -7,7 +7,7 @@ const AddHabitPill: React.FC = () => {
 
     // Función onPress predefinida para redirigir
     const handlePress = () => {
-        router.push('/addTask'); // Redirige a la pantalla AddTask
+        router.push('/addHabit'); // Redirige a la pantalla AddTask
     };
 
     return (
