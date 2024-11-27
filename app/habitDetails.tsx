@@ -40,9 +40,10 @@ export default function TaskDetailsScreen() {
     <View style={styles.container}>
       <Text style={styles.text}>Task Details Screen</Text>
       <Text style={styles.text}>Habit ID: {habit.id}</Text>
-      <Text style={styles.text}>Name: {habit.name}</Text>
-      <Text style={styles.text}>Priority: {habit.priority}</Text>
-      <Text style={styles.text}>Completed: {habit.completed ? 'Yes' : 'No'}</Text>
+      <Text style={styles.text}>Nombre: {habit.name}</Text>
+      <Text style={styles.text}>Prioridad: {habit.priority}</Text>
+      <Text style={styles.text}>Descripción: {habit.description}</Text>
+      <Text style={styles.text}>Completada: {habit.completed ? 'Si' : 'No'}</Text>
       <Button title="eliminar" onPress={handleDelete}></Button>
     </View>
   );
