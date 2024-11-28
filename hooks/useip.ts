@@ -1,5 +1,5 @@
 export default function useIp() {
-    const ip = "X.X.X.X";
+    const ip = "192.168.43.76";
     return { ip };
   }
   

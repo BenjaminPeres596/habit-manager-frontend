@@ -5,6 +5,7 @@ import { useRouter } from 'expo-router';
 import { useContext, useState } from 'react';
 import { Text, View, StyleSheet, Button } from 'react-native';
 import { habitListContext } from '../context/habitContext'; // Adjust the import path as needed
+import { createHabit } from '@/services/habit';
 
 export default function HomeScreen() {
   const navigation = useRouter();
@@ -34,6 +35,8 @@ export default function HomeScreen() {
           />
         ))}
         <AddHabitPill />
+
+        <Button title="create random task" onPress={() => createHabit('tarea','High','a')}></Button>
 
       </View>
 
