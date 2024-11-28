@@ -14,6 +14,7 @@ export default function LoginScreen() {
   const navigation = useRouter();
 
   const auth0 = useAuth0();
+  
   if (auth0.user) {
     navigation.replace("/home");
   }
@@ -39,14 +40,6 @@ export default function LoginScreen() {
       <ThemedView style={styles.stepContainer}>
         <Profile />
       </ThemedView>
-
-      {/* Otros pasos y botones aquí */}
-
-      <ThemedView style={styles.stepContainer}>
-        <LogoutButton />
-      </ThemedView>
-
-      <Button title="skip login" onPress={() => navigation.navigate("/home")}></Button>
 
     </ParallaxScrollView>
   );
