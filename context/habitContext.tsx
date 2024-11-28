@@ -20,7 +20,7 @@ export const HabitProvider: React.FC<{ children: ReactNode }> = ({ children }) =
                     id: habit.id,
                     name: habit.name,
                     priority: habit.priority === 0 ? 'High' : habit.priority === 1 ? 'Medium' : 'Low',
-                    completed: false, // Assuming the completed status is not provided in the response
+                    completed: habit.completed, // Assuming the completed status is not provided in the response
                     description: habit.description,
                 }));
                 setHabits(formattedHabits);

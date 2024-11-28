@@ -36,8 +36,6 @@ export default function HomeScreen() {
         ))}
         <AddHabitPill />
 
-        <Button title="create random task" onPress={() => createHabit('tarea','High','a')}></Button>
-
       </View>
 
     </View>
