@@ -38,8 +38,8 @@ export default function RootLayout() {
             <Stack>
               <Stack.Screen name="index" options={{ headerShown: false }} />
               <Stack.Screen name="home" options={{ headerShown: false }} />
-              <Stack.Screen name="addTask" />
-              <Stack.Screen name="taskDetails" />
+              <Stack.Screen name="addHabit" />
+              <Stack.Screen name="habitDetails" />
             </Stack>
           </HabitProvider>
 

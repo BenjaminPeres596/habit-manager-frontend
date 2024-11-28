@@ -2,6 +2,7 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useContext } from 'react';
 import { habitListContext } from '../context/habitContext'; // Adjust the import path as needed
+import { deleteHabit } from '@/services/habit';
 
 export default function TaskDetailsScreen() {
   const navigation = useRouter();
@@ -23,6 +24,7 @@ export default function TaskDetailsScreen() {
     console.log('Delete button pressed');
     if (habit) {
       setHabits(habits.filter(h => h.id !== habit.id));
+      deleteHabit(habit.id);
       navigation.navigate("/home")
     }
     
