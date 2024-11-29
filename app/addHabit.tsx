@@ -78,13 +78,12 @@ export default function AddTaskScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
     justifyContent: 'center',
     alignItems: 'center',
     padding: 16,
   },
   text: {
-    color: '#fff',
+    color: 'black',
     fontSize: 18,
     marginVertical: 10,
   },
