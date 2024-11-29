@@ -1,15 +1,13 @@
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+import { useRouter } from 'expo-router';
+import { habitListContext } from '../context/habitContext'; // Adjust the import path as needed
 import HabitPill from '@/components/HabitPill';
 import AddHabitPill from '@/components/AddHabitPill';
 import LogoutButton from '@/components/LogoutButton';
-import { useRouter } from 'expo-router';
-import { useContext, useState } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
-import { habitListContext } from '../context/habitContext'; // Adjust the import path as needed
-import { createHabit } from '@/services/habit';
 
 export default function HomeScreen() {
   const navigation = useRouter();
-
   const context = useContext(habitListContext);
 
   if (!context) {
@@ -20,12 +18,9 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.container}>
-      <LogoutButton />
-
+      <LogoutButton style={styles.logoutButton} />
       <Text style={styles.title}>TP3 Móviles Gupo XX</Text>
-
       <View style={styles.mainContainer}>
-
         <Text style={styles.text}>Aca iría el filtro</Text>
         {habits.map((habit) => (
           <HabitPill
@@ -35,9 +30,7 @@ export default function HomeScreen() {
           />
         ))}
         <AddHabitPill />
-
       </View>
-
     </View>
   );
 }
@@ -45,27 +38,24 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#25292e',
-    justifyContent: 'center',
-    alignItems: 'center',
+    paddingTop: 50, // Add padding to avoid overlap with the status bar
   },
-  text: {
-    color: 'white',
-    fontSize: 24,
-    marginBottom: 16,
+  logoutButton: {
+    position: 'absolute',
+    top: 10,
+    right: 10,
   },
   title: {
-    color: 'white',
     fontSize: 24,
-    position: 'absolute',
-    top: 80,
+    textAlign: 'center',
+    marginVertical: 20,
   },
   mainContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: '100%',
-    padding: 16,
-    marginTop: 16,
+    flex: 1,
+    paddingHorizontal: 20,
+  },
+  text: {
+    fontSize: 16,
+    marginBottom: 10,
   },
 });
