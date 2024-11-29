@@ -1,6 +1,7 @@
 import useIp from "@/hooks/useip";
-import { Habit } from "@/types/types";
+
 const { ip } = useIp();
+
 export const getHabits = async () => {
     console.log("Fetching habits...");
     try {
