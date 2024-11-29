@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { Text, View, StyleSheet, Button, TouchableOpacity, TextInput } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { habitListContext } from '../context/habitContext'; // Adjust the import path as needed
 import { deleteHabit } from '@/services/habit'; // Adjust the import path as needed
@@ -16,6 +16,10 @@ export default function HabitDetailsScreen() {
   const { habits, setHabits } = context;
   const habit = habits.find(h => h.id === Number(id)); // Find the habit with the matching ID
 
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedName, setEditedName] = useState(habit?.name || '');
+  const [editedDescription, setEditedDescription] = useState(habit?.description || '');
+
   const handleDelete = async () => {
     console.log('Delete button pressed');
     if (habit) {
@@ -25,9 +29,10 @@ export default function HabitDetailsScreen() {
     }
   };
 
-  const handleComplete = () => {
+  const handleSaveChanges = () => {
     if (habit) {
-      setHabits(habits.map(h => h.id === habit.id ? { ...h, completed: !h.completed } : h));
+      setHabits(habits.map(h => h.id === habit.id ? { ...h, name: editedName, description: editedDescription } : h));
+      setIsEditing(false);
     }
   };
 
@@ -47,10 +52,28 @@ export default function HabitDetailsScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.habitName}>{habit.name}</Text>
-      <View style={styles.descriptionBox}>
-        <Text style={styles.text}>{habit.description}</Text>
-      </View>
+      {isEditing ? (
+        <>
+          <TextInput
+            style={styles.input}
+            value={editedName}
+            onChangeText={setEditedName}
+          />
+          <TextInput
+            style={[styles.input, styles.descriptionInput]}
+            value={editedDescription}
+            onChangeText={setEditedDescription}
+            multiline
+          />
+        </>
+      ) : (
+        <>
+          <Text style={styles.habitName}>{habit.name}</Text>
+          <View style={styles.descriptionBox}>
+            <Text style={styles.text}>{habit.description}</Text>
+          </View>
+        </>
+      )}
       <View style={styles.priorityContainer}>
         <Text style={styles.text}>Prioridad:</Text>
         <TouchableOpacity
@@ -76,9 +99,15 @@ export default function HabitDetailsScreen() {
         <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
           <Text style={styles.buttonText}>Eliminar</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.completeButton} onPress={handleComplete}>
-          <Text style={styles.buttonText}>Completar {habit.completed ? '✓' : '[]'}</Text>
-        </TouchableOpacity>
+        {isEditing ? (
+          <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
+            <Text style={styles.buttonText}>Guardar Cambios</Text>
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity style={styles.editButton} onPress={() => setIsEditing(true)}>
+            <Text style={styles.buttonText}>Editar</Text>
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -136,13 +165,29 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 5,
   },
-  completeButton: {
+  saveButton: {
     backgroundColor: '#4caf50',
+    padding: 10,
+    borderRadius: 5,
+  },
+  editButton: {
+    backgroundColor: '#2196f3',
     padding: 10,
     borderRadius: 5,
   },
   buttonText: {
     color: '#fff',
     fontSize: 16,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    padding: 10,
+    marginBottom: 20,
+    fontSize: 16,
+  },
+  descriptionInput: {
+    height: 100,
+    textAlignVertical: 'top',
   },
 });
