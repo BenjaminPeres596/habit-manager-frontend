@@ -3,6 +3,7 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { Habit } from '@/types/types';
 import { habitListContext } from '@/context/habitContext';
+import { completeHabit } from '@/services/habit';
 
 interface HabitPillProps {
     habit: Habit;
@@ -23,13 +24,15 @@ const HabitPill: React.FC<HabitPillProps> = ({ habit, onPress }) => {
 
     const [checked, setChecked] = useState(completed);
 
-    useEffect(() => {
+    const handleCheckbox = async() => {
+        setChecked(!checked);
         const index = habits.findIndex((h) => h.id === habit.id);
         if (index !== -1) {
             habits[index].completed = checked;
         }
-    }, [checked]);
-
+        completeHabit(id);
+    }
+    
     // Mapa de colores basado en la prioridad
     const priorityColors: { [key in 'High' | 'Medium' | 'Low']: string } = {
         High: '#F46B6B',
@@ -48,7 +51,7 @@ const HabitPill: React.FC<HabitPillProps> = ({ habit, onPress }) => {
                 color='black'
                 uncheckedColor='black'
                 status={checked ? 'checked' : 'unchecked'}
-                onPress={() => setChecked(!checked)}
+                onPress={() => handleCheckbox()}
             />
         </TouchableOpacity>
     );

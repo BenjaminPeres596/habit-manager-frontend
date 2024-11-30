@@ -66,3 +66,21 @@ export const createHabit = async (name: string, priority: 'High' | 'Medium' | 'L
         return false;
     }
 }
+
+export const completeHabit = async (id: number) => {
+    console.log(`Changing status of habit with id: ${id}`);
+    try{
+        const response = await fetch(`http://${ip}:5000/habits/${id}/changeStatus`, {
+            method: 'POST',
+        });
+        if (!response.ok) {
+            throw new Error(`Failed to change status of habit with id: ${id}`);
+        }
+        console.log(`Status of habit with id: ${id} changed successfully`);
+        return true;
+    }
+    catch(e){
+        console.log(e);
+        return false;
+    }
+}
