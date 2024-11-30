@@ -19,6 +19,7 @@ export default function HabitDetailsScreen() {
   const [isEditing, setIsEditing] = useState(false);
   const [editedName, setEditedName] = useState(habit?.name || '');
   const [editedDescription, setEditedDescription] = useState(habit?.description || '');
+  const [editedPriority, setEditedPriority] = useState(habit?.priority || 'Low');
 
   const handleDelete = async () => {
     console.log('Delete button pressed');
@@ -31,16 +32,17 @@ export default function HabitDetailsScreen() {
 
   const handleSaveChanges = () => {
     if (habit) {
-      setHabits(habits.map(h => h.id === habit.id ? { ...h, name: editedName, description: editedDescription } : h));
+      setHabits(habits.map(h => h.id === habit.id ? { ...h, name: editedName, description: editedDescription, priority: editedPriority } : h));
       setIsEditing(false);
     }
   };
 
-  const handlePriorityChange = (newPriority: 'High' | 'Medium' | 'Low') => {
-    if (habit) {
-      setHabits(habits.map(h => h.id === habit.id ? { ...h, priority: newPriority } : h));
-    }
-  };
+  const handleCancel = () => {
+    setIsEditing(false);
+    setEditedName(habit?.name || '');
+    setEditedDescription(habit?.description || '');
+    setEditedPriority(habit?.priority || 'Low');
+  }
 
   if (!habit) {
     return (
@@ -68,6 +70,27 @@ export default function HabitDetailsScreen() {
             onChangeText={setEditedDescription}
             multiline
           />
+          <View style={styles.priorityContainer}>
+            <Text style={styles.text}>Prioridad:</Text>
+            <TouchableOpacity
+              style={[styles.priorityButton, editedPriority === 'High' && styles.selectedHighPriority]}
+              onPress={() => setEditedPriority('High')}
+            >
+              <Text style={styles.priorityButtonText}>High</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.priorityButton, editedPriority === 'Medium' && styles.selectedMediumPriority]}
+              onPress={() => setEditedPriority('Medium')}
+            >
+              <Text style={styles.priorityButtonText}>Medium</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.priorityButton, editedPriority === 'Low' && styles.selectedLowPriority]}
+              onPress={() => setEditedPriority('Low')}
+            >
+              <Text style={styles.priorityButtonText}>Low</Text>
+            </TouchableOpacity>
+          </View>
         </>
       ) : (
         <>
@@ -78,39 +101,25 @@ export default function HabitDetailsScreen() {
           </View>
         </>
       )}
-      <View style={styles.priorityContainer}>
-        <Text style={styles.text}>Prioridad:</Text>
-        <TouchableOpacity
-          style={[styles.priorityButton, habit.priority === 'High' && styles.selectedHighPriority]}
-          onPress={() => handlePriorityChange('High')}
-        >
-          <Text style={styles.priorityButtonText}>High</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.priorityButton, habit.priority === 'Medium' && styles.selectedMediumPriority]}
-          onPress={() => handlePriorityChange('Medium')}
-        >
-          <Text style={styles.priorityButtonText}>Medium</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={[styles.priorityButton, habit.priority === 'Low' && styles.selectedLowPriority]}
-          onPress={() => handlePriorityChange('Low')}
-        >
-          <Text style={styles.priorityButtonText}>Low</Text>
-        </TouchableOpacity>
-      </View>
       <View style={styles.buttonContainer}>
-        <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
-          <Text style={styles.buttonText}>Eliminar</Text>
-        </TouchableOpacity>
         {isEditing ? (
-          <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
-            <Text style={styles.buttonText}>Guardar Cambios</Text>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity style={styles.deleteButton} onPress={handleCancel}>
+              <Text style={styles.buttonText}>Cancelar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.saveButton} onPress={handleSaveChanges}>
+              <Text style={styles.buttonText}>Guardar Cambios</Text>
+            </TouchableOpacity>
+          </>
         ) : (
-          <TouchableOpacity style={styles.editButton} onPress={() => setIsEditing(true)}>
-            <Text style={styles.buttonText}>Editar</Text>
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity style={styles.deleteButton} onPress={handleDelete}>
+              <Text style={styles.buttonText}>Eliminar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.editButton} onPress={() => setIsEditing(true)}>
+              <Text style={styles.buttonText}>Editar</Text>
+            </TouchableOpacity>
+          </>
         )}
       </View>
     </View>
