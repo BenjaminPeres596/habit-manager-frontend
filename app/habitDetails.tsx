@@ -54,11 +54,14 @@ export default function HabitDetailsScreen() {
     <View style={styles.container}>
       {isEditing ? (
         <>
+          <Text style={styles.habitName}>Editar Hábito</Text>
+          <Text style={styles.text}>Nombre:</Text>
           <TextInput
             style={styles.input}
             value={editedName}
             onChangeText={setEditedName}
           />
+          <Text style={styles.text}>Descripción:</Text>
           <TextInput
             style={[styles.input, styles.descriptionInput]}
             value={editedDescription}
@@ -69,6 +72,7 @@ export default function HabitDetailsScreen() {
       ) : (
         <>
           <Text style={styles.habitName}>{habit.name}</Text>
+          <Text style={styles.text}>Descripción:</Text>
           <View style={styles.descriptionBox}>
             <Text style={styles.text}>{habit.description}</Text>
           </View>
@@ -77,19 +81,19 @@ export default function HabitDetailsScreen() {
       <View style={styles.priorityContainer}>
         <Text style={styles.text}>Prioridad:</Text>
         <TouchableOpacity
-          style={[styles.priorityButton, habit.priority === 'High' && styles.selectedPriority]}
+          style={[styles.priorityButton, habit.priority === 'High' && styles.selectedHighPriority]}
           onPress={() => handlePriorityChange('High')}
         >
           <Text style={styles.priorityButtonText}>High</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.priorityButton, habit.priority === 'Medium' && styles.selectedPriority]}
+          style={[styles.priorityButton, habit.priority === 'Medium' && styles.selectedMediumPriority]}
           onPress={() => handlePriorityChange('Medium')}
         >
           <Text style={styles.priorityButtonText}>Medium</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          style={[styles.priorityButton, habit.priority === 'Low' && styles.selectedPriority]}
+          style={[styles.priorityButton, habit.priority === 'Low' && styles.selectedLowPriority]}
           onPress={() => handlePriorityChange('Low')}
         >
           <Text style={styles.priorityButtonText}>Low</Text>
@@ -130,6 +134,8 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     padding: 10,
     marginBottom: 20,
+    borderRadius: 15,
+    height: 100,
   },
   text: {
     fontSize: 16,
@@ -148,6 +154,15 @@ const styles = StyleSheet.create({
   },
   selectedPriority: {
     backgroundColor: '#ddd',
+  },
+  selectedHighPriority: {
+    backgroundColor: '#F46B6B',
+  },
+  selectedMediumPriority: {
+    backgroundColor: '#FFBC37',
+  },
+  selectedLowPriority: {
+    backgroundColor: '#84F46B',
   },
   priorityButtonText: {
     fontSize: 16,
@@ -185,9 +200,11 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     fontSize: 16,
+    borderRadius: 15,
   },
   descriptionInput: {
     height: 100,
     textAlignVertical: 'top',
+    borderRadius: 15,
   },
 });
