@@ -1,65 +1,61 @@
-import { Image, StyleSheet, Platform, Button } from 'react-native';
-import { HelloWave } from '@/components/HelloWave';
-import ParallaxScrollView from '@/components/ParallaxScrollView';
+import { StyleSheet, View } from 'react-native';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import LoginButton from '@/components/LoginButton';
-import LogoutButton from '@/components/LogoutButton';
-import Profile from '@/components/Profile'; // Asegúrate de que la ruta sea correcta
 import { useRouter } from 'expo-router';
 import { useAuth0 } from 'react-native-auth0';
 
 export default function LoginScreen() {
-
   const navigation = useRouter();
-
   const auth0 = useAuth0();
-  
+
   if (auth0.user) {
-    navigation.replace("/home");
+    navigation.replace('/home');
   }
 
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
+    <ThemedView style={styles.container}>
+      {/* Header Section */}
+      <View style={styles.header}>
+        <ThemedText type="title" style={styles.title}>
+          Habit Manager
+        </ThemedText>
+        <ThemedText type="subtitle" style={styles.subtitle}>
+          Organiza tus hábitos y transforma tu rutina.
+        </ThemedText>
+      </View>
 
-      <ThemedView style={styles.stepContainer}>
-        <LoginButton />
-      </ThemedView>
-
-      <ThemedView style={styles.stepContainer}>
-        <Profile />
-      </ThemedView>
-
-    </ParallaxScrollView>
+      {/* Main Content */}
+      <View style={styles.content}>
+        <LoginButton/>
+      </View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    backgroundColor: '#F5F5F5', // Fondo claro
+    justifyContent: 'center',
+    padding: 20,
   },
-  stepContainer: {
-    gap: 8,
+  header: {
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#2C3E50',
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  subtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    color: '#7F8C8D',
+  },
+  content: {
+    alignItems: 'center',
   },
 });
