@@ -161,22 +161,22 @@ const styles = StyleSheet.create({
     right: 20,
   },
   deleteButton: {
-    backgroundColor: '#f44336',
+    backgroundColor: '#F46B6B',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 100,
   },
   saveButton: {
-    backgroundColor: '#4caf50',
+    backgroundColor: '#84F46B',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 100,
   },
   editButton: {
-    backgroundColor: '#2196f3',
+    backgroundColor: '#0ACDFF',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 100,
   },
   buttonText: {
-    color: '#fff',
+    color: 'black',
     fontSize: 16,
   },
   input: {
