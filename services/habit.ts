@@ -1,4 +1,5 @@
 import useIp from "@/hooks/useip";
+import { User } from "@/types/types";
 
 const { ip } = useIp();
 
@@ -17,6 +18,28 @@ export const getHabits = async () => {
         return false;
     }
 };
+
+export const getUserHabits = async (userId: number) => {
+    console.log("Fetching habits...");
+
+    try {
+        const response = await fetch(`http://${ip}:5000/habits/user`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "user_id": userId,
+            }),
+        });
+        const habits = await response.json();
+        return habits;
+    }
+    catch (e) {
+        console.log(e);
+        return false;
+    }
+}
 
 export const deleteHabit = async (id: number) => {
     console.log(`Deleting habit whit id: ${id}`)
@@ -90,7 +113,7 @@ export const changeHabitState = async (id: number) => {
 export const updateHabit = async (id: number, name: string, priority: 'High' | 'Medium' | 'Low', description: string) => {
 
     console.log(`Updating habit with id: ${id}`);
-    
+
     const newPriority = priority === 'High' ? '0' : priority === 'Medium' ? '1' : '2';
 
     console.log(`New name: ${name}`);
@@ -110,7 +133,7 @@ export const updateHabit = async (id: number, name: string, priority: 'High' | '
                 "description": description,
             }),
         });
-        if (!response.ok){
+        if (!response.ok) {
             throw new Error(`Failed to update habit with id: ${id}`);
         }
         console.log(`Habit with id: ${id} updated successfully`);
