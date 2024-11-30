@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { habitListContext } from '@/context/habitContext';
-import { Text, View, StyleSheet, Button, TextInput } from 'react-native';
-import { Picker } from '@react-native-picker/picker';
+import { Text, View, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import { createHabit } from '@/services/habit';
 import { Habit } from '@/types/types';
 import { useRouter } from 'expo-router';
@@ -19,30 +18,29 @@ export default function AddTaskScreen() {
   const { habits, setHabits } = context;
 
   const [name, setName] = useState('');
-  const [priority, setPriority] = useState<'High' | 'Medium' | 'Low'>('Low');
+  const [priority, setPriority] = useState<'High' | 'Medium' | 'Low'>('High');
   const [description, setDescription] = useState('');
 
   const handleNewHabit = async () => {
-    const newHabitId = await createHabit(name, priority, description);
-    if (newHabitId !== false) {
-      const newHabit: Habit = {
-        id: newHabitId,
-        name,
-        priority,
-        completed: false,
-        description,
-      };
-      setHabits([...habits, newHabit]);
-      setName('');
-      setPriority('Low');
-      setDescription('');
-    }
+    const newHabit: Habit = {
+      id: 0,
+      name,
+      priority,
+      completed: false,
+      description,
+    };
+    setHabits([...habits, newHabit]);
     navigation.navigate('/home');
+    const newHabitId = await createHabit(name, priority, description);
+    if (newHabitId) {
+      newHabit.id = newHabitId;
+      setHabits([...habits, newHabit]);
+    }
   }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Agregar nuevo hábito</Text>
+      <Text style={styles.title}>Nombre del Hábito</Text>
       <TextInput
         style={styles.input}
         placeholder="Nombre del hábito"
@@ -50,27 +48,45 @@ export default function AddTaskScreen() {
         value={name}
         onChangeText={setName}
       />
-      <View style={styles.pickerContainer}>
-        <Text style={styles.text}>Prioridad:</Text>
-        <Picker
-          selectedValue={priority}
-          style={styles.picker}
-          onValueChange={(itemValue) => setPriority(itemValue as 'High' | 'Medium' | 'Low')}
+      <Text style={styles.text}>Prioridad:</Text>
+      <View style={styles.priorityContainer}>
+        <TouchableOpacity
+          style={[styles.priorityButton, priority === 'High' && styles.selectedHighPriority]}
+          onPress={() => setPriority('High')}
         >
-          <Picker.Item label="Alta" value="High" />
-          <Picker.Item label="Media" value="Medium" />
-          <Picker.Item label="Baja" value="Low" />
-        </Picker>
-      <Text style={styles.text}>Agregue una descripción (opcional)</Text>
-        <TextInput
-          style={styles.input}
-          placeholder="Descripción"
-          value={description}
-          onChangeText={setDescription}
-        />
+          <Text style={styles.priorityButtonText}>Alta</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.priorityButton, priority === 'Medium' && styles.selectedMediumPriority]}
+          onPress={() => setPriority('Medium')}
+        >
+          <Text style={styles.priorityButtonText}>Media</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.priorityButton, priority === 'Low' && styles.selectedLowPriority]}
+          onPress={() => setPriority('Low')}
+        >
+          <Text style={styles.priorityButtonText}>Baja</Text>
+        </TouchableOpacity>
       </View>
+      <Text style={styles.text}>Agregue una descripción (opcional)</Text>
+      <TextInput
+        style={styles.descriptionInput}
+        placeholder="Descripción"
+        value={description}
+        onChangeText={setDescription}
+        multiline
+      />
+      <View style={styles.buttonContainer}>
 
-      <Button title="Agregar hábito" onPress={handleNewHabit} />
+        <TouchableOpacity style={styles.cancelButton} onPress={navigation.back}>
+          <Text style={styles.buttonText}>Cancelar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.confirmButton} onPress={() => handleNewHabit()}>
+          <Text style={styles.buttonText}>Confirmar</Text>
+        </TouchableOpacity>
+
+      </View>
     </View>
   );
 }
@@ -78,9 +94,14 @@ export default function AddTaskScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
+    backgroundColor: '#fff',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
   },
   text: {
     color: 'black',
@@ -88,21 +109,75 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   input: {
-    backgroundColor: '#fff',
+    backgroundColor: '#D9D9D9',
     color: '#000',
     width: '100%',
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 15,
     marginVertical: 10,
   },
-  pickerContainer: {
-    width: '100%',
-    marginBottom: 15,
+  priorityContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 20,
   },
-  picker: {
-    height: 50,
+  priorityButton: {
+    width: 100,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 100,
+  },
+  selectedPriority: {
+    backgroundColor: '#ddd',
+  },
+  selectedHighPriority: {
+    backgroundColor: '#F46B6B',
+  },
+  selectedMediumPriority: {
+    backgroundColor: '#FFBC37',
+  },
+  selectedLowPriority: {
+    backgroundColor: '#84F46B',
+  },
+  priorityButtonText: {
+    textAlign: 'center',
+    fontSize: 16,
+  },
+  descriptionInput: {
+    textAlignVertical: 'top',
+
+    height: 100,
+    backgroundColor: '#D9D9D9',
+    color: '#000',
     width: '100%',
-    backgroundColor: '#fff',
-    borderRadius: 5,
+    padding: 10,
+    borderRadius: 15,
+    marginVertical: 10,
+  },
+  buttonContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    bottom: 20,
+    left: 20,
+    right: 20,
+  },
+  cancelButton: {
+    width: '30%',
+    backgroundColor: '#F46B6B',
+    padding: 10,
+    borderRadius: 100,
+  },
+  confirmButton: {
+    width: '30%',
+    backgroundColor: '#84F46B',
+    padding: 10,
+    borderRadius: 100,
+  },
+  buttonText: {
+    textAlign: 'center',
+    color: 'black',
+    fontSize: 16,
   },
 });

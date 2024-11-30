@@ -57,7 +57,7 @@ export default function HabitDetailsScreen() {
     <View style={styles.container}>
       {isEditing ? (
         <>
-          <Text style={styles.habitName}>Editar Hábito</Text>
+          <Text style={styles.title}>Editar Hábito</Text>
           <Text style={styles.text}>Nombre:</Text>
           <TextInput
             style={styles.input}
@@ -95,7 +95,7 @@ export default function HabitDetailsScreen() {
         </>
       ) : (
         <>
-          <Text style={styles.habitName}>{habit.name}</Text>
+          <Text style={styles.title}>{habit.name}</Text>
           <Text style={styles.text}>Descripción:</Text>
           <View style={styles.descriptionBox}>
             <Text style={styles.text}>{habit.description}</Text>
@@ -133,7 +133,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     padding: 20,
   },
-  habitName: {
+  title: {
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
