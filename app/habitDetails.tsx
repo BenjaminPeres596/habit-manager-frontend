@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import { Text, View, StyleSheet, Button, TouchableOpacity, TextInput } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { habitListContext } from '../context/habitContext'; // Adjust the import path as needed
-import { deleteHabit } from '@/services/habit'; // Adjust the import path as needed
+import { deleteHabit, updateHabit } from '@/services/habit'; // Adjust the import path as needed
 
 export default function HabitDetailsScreen() {
   const { id } = useLocalSearchParams(); // Access the habit ID from the query parameters
@@ -34,6 +34,7 @@ export default function HabitDetailsScreen() {
     if (habit) {
       setHabits(habits.map(h => h.id === habit.id ? { ...h, name: editedName, description: editedDescription, priority: editedPriority } : h));
       setIsEditing(false);
+      updateHabit(habit.id, editedName, editedPriority, editedDescription);
     }
   };
 

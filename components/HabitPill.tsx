@@ -3,7 +3,7 @@ import { Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { Checkbox } from 'react-native-paper';
 import { Habit } from '@/types/types';
 import { habitListContext } from '@/context/habitContext';
-import { completeHabit } from '@/services/habit';
+import { changeHabitState } from '@/services/habit';
 
 interface HabitPillProps {
     habit: Habit;
@@ -30,7 +30,7 @@ const HabitPill: React.FC<HabitPillProps> = ({ habit, onPress }) => {
         if (index !== -1) {
             habits[index].completed = checked;
         }
-        completeHabit(id);
+        changeHabitState(id);
     }
     
     // Mapa de colores basado en la prioridad
