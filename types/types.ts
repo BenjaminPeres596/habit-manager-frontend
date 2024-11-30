@@ -7,3 +7,10 @@ export interface Habit {
     completed: boolean;
     description: string;
 }
+
+export interface User {
+    id: number;
+    name: string;
+    email: string;
+    lastName: string;
+}
